@@ -1,0 +1,23 @@
+{
+    "name": "webpack-starter-kit",
+    "version": "1.0.0",
+    "description": "course webpack",
+    "main": "webpack.conf.js",
+    "scripts": {
+        "build": "webpack --mode production",
+        "dev": "webpack --mode development",
+        "build2": "webpack --mode production ./foo/src/index.js --output ./foo/main.js",
+        "dev2": "webpack --mode development ./foo/src/index.js --output ./foo/main.js",
+        "build-babel": "webpack --mode production --module-bind js=babel-loader",
+        "dev-babel": "webpack --mode development --module-bind js=babel-loader"
+    },
+    "author": "mavl",
+    "license": "MIT",
+    "devDependencies": {
+        "babel-core": "^6.26.3",
+        "babel-loader": "^7.1.5",
+        "babel-preset-env": "^1.7.0",
+        "webpack": "^4.16.3",
+        "webpack-cli": "^3.1.0"
+    }
+}
