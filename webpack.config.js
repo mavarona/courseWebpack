@@ -1,5 +1,6 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin'),
-    MiniCssExtractPlugin = require('mini-css-extract-plugin');
+    MiniCssExtractPlugin = require('mini-css-extract-plugin'),
+    CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
     // entry: {},
@@ -25,9 +26,18 @@ module.exports = {
                 'style-loader',
                 MiniCssExtractPlugin.loader,
                 'css-loader?minimize&sourceMap',
+                'resolve-url-loader',
                 'sass-loader?outputStyle=compressed&sourceMap'
             ]
-        }]
+        }, {
+            test: /\.(jpe?g|png|gif|svg|webp)$/i,
+            use: [
+                'file-loader?name=assets/[name].[ext]'
+            ]
+        }, {
+            test: /\.(ttf|eot|woff2?|mp4|mp3|txt|xml|pdf)$/i,
+            use: 'file-loader?name=assets/[name].[ext]'
+        }, ]
     },
     plugins: [
         new HtmlWebPackPlugin({
