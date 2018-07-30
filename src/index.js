@@ -1,9 +1,16 @@
 import style from './style.css';
 import sass from './scss/main.scss';
 import data from './data.json';
+import logo from './img/webpack-logo.svg';
 
 const arr = [1, 2, 3],
-    codeES6 = () => console.log(...arr)
+    codeES6 = () => console.log(...arr),
+    d = document,
+    app = d.getElementById('app'),
+    img = d.createElement('img');
+
+img.src = logo;
+d.body.appendChild(img);
 
 codeES6()
 console.log(data, data.name);
