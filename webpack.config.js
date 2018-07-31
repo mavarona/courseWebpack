@@ -1,18 +1,24 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin'),
     MiniCssExtractPlugin = require('mini-css-extract-plugin'),
-    CleanWebpackPlugin = require("clean-webpack-plugin");
+    CleanWebpackPlugin = require("clean-webpack-plugin"),
+    {
+        VueLoaderPlugin
+    } = require('vue-loader');
 
 module.exports = {
     entry: {
         js: './src/index.js',
         vanilla: './src/hello_vanilla.js',
+        react: './src/hello_react.js',
+        vue: './src/hello_vue.js'
     },
     output: {
         filename: '[name].[chunkhash].js'
     },
+    devtool: 'inline-source-map',
     module: {
         rules: [{
-            test: /\.js$/,
+            test: /\.(js|jsx)$/,
             exclude: /node_modules/,
             use: {
                 loader: 'babel-loader'
@@ -44,7 +50,13 @@ module.exports = {
         }, {
             test: /\.(ttf|eot|woff2?|mp4|mp3|txt|xml|pdf)$/i,
             use: 'file-loader?name=assets/[name].[ext]'
-        }, ]
+        }, {
+            test: /\.vue$/,
+            exclude: /node_modules/,
+            use: {
+                loader: 'vue-loader'
+            }
+        }]
     },
     plugins: [
         new HtmlWebPackPlugin({
@@ -59,6 +71,19 @@ module.exports = {
             hash: true,
             chunks: ['vanilla']
         }),
+        new HtmlWebPackPlugin({
+            template: './src/template.html',
+            filename: './hello-react.html',
+            hash: true,
+            chunks: ['react']
+        }),
+        new HtmlWebPackPlugin({
+            template: './src/template.html',
+            filename: './hello-vue.html',
+            hash: true,
+            chunks: ['vue']
+        }),
+        new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[id].css'

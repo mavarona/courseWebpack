@@ -19,6 +19,7 @@
         "babel-core": "^6.26.3",
         "babel-loader": "^7.1.5",
         "babel-preset-env": "^1.7.0",
+        "babel-preset-react": "^6.24.1",
         "clean-webpack-plugin": "^0.1.19",
         "css-loader": "^1.0.0",
         "file-loader": "^1.1.11",
@@ -30,11 +31,17 @@
         "resolve-url-loader": "^2.3.0",
         "sass-loader": "^7.0.3",
         "style-loader": "^0.21.0",
+        "vue-loader": "^15.2.4",
+        "vue-style-loader": "^4.1.0",
+        "vue-template-compiler": "^2.5.16",
         "webpack": "^4.16.3",
         "webpack-cli": "^3.1.0",
         "webpack-dev-server": "^3.1.4"
     },
     "dependencies": {
-        "image-webpack-loader": "^4.3.1"
+        "image-webpack-loader": "^4.3.1",
+        "react": "^16.4.1",
+        "react-dom": "^16.4.1",
+        "vue": "^2.5.16"
     }
 }
