@@ -10,7 +10,8 @@ module.exports = {
         js: './src/index.js',
         vanilla: './src/hello_vanilla.js',
         react: './src/hello_react.js',
-        vue: './src/hello_vue.js'
+        vue: './src/hello_vue.js',
+        ts: './src/hello_ts.js'
     },
     output: {
         filename: '[name].[chunkhash].js'
@@ -56,6 +57,12 @@ module.exports = {
             use: {
                 loader: 'vue-loader'
             }
+        }, {
+            test: /\.tsx?$/,
+            exclude: /node_modules/,
+            use: {
+                loader: 'ts-loader'
+            }
         }]
     },
     plugins: [
@@ -82,6 +89,12 @@ module.exports = {
             filename: './hello-vue.html',
             hash: true,
             chunks: ['vue']
+        }),
+        new HtmlWebPackPlugin({
+            template: './src/template.html',
+            filename: './hello-ts.html',
+            hash: true,
+            chunks: ['ts']
         }),
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
