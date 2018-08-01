@@ -38,11 +38,36 @@ export class ToDoList {
     }
 
     editTask(e) {
+        if (e.target.matches('label')) {
+            let tasks = j.parse(ls.getItem(this.key)),
+                toEdit = tasks.findIndex(task => task.name === e.target.textContent),
+                label = d.querySelector(`[data-id="${tasks[toEdit].id}"]`)
 
+            //c(tasks, toEdit, tasks[toEdit])
+
+            const saveTask = e => {
+                e.target.textContent = e.target.textContent
+                tasks[toEdit].name = e.target.textContent
+                ls.setItem(this.key, j.stringify(tasks))
+                e.target.blur()
+            }
+
+            label.addEventListener('blur', e => saveTask(e))
+            label.addEventListener('keyup', e => (e.keyCode === ENTER_KEY) && saveTask(e))
+        }
     }
 
     removeTask(e) {
+        if (e.target.matches('a')) {
+            let tasks = j.parse(ls.getItem(this.key)),
+                toRemove = tasks.findIndex(task => task.id.toString() === e.target.dataset.id)
 
+            c(tasks, toRemove)
+
+            tasks.splice(toRemove, 1)
+            ls.setItem(this.key, j.stringify(tasks))
+            e.target.parentElement.remove()
+        }
     }
 
     renderTask(task) {
@@ -63,6 +88,22 @@ export class ToDoList {
             listTasks = list.children;
 
         tasks.forEach(task => this.renderTask(task));
+
+        Array.from(listTasks).forEach(input => {
+            input.querySelector('input[type="checkbox"]').addEventListener('change', e => {
+                let task = tasks.filter(task => task.id == e.target.id);
+
+                if (e.target.checked) {
+                    e.target.parentElement.classList.add('complete');
+                    task[0].isComplete = true;
+                } else {
+                    e.target.parentElement.classList.remove('complete');
+                    task[0].isComplete = false;
+                }
+
+                ls.setItem(this.key, j.stringify(tasks));
+            })
+        })
 
         task.addEventListener('keyup', this.addTask);
         list.addEventListener('keyup', this.editTask);
