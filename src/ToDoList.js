@@ -26,8 +26,14 @@ export class ToDoList {
         if (!e.target.value) {
             alert('Not data entered');
         }
-        if (e.target === ENTER_KEY) {
+        if (e.keyCode === ENTER_KEY) {
+            let newTask = new Task(e.target.value),
+                tasks = j.parse(ls.getItem(this.key));
 
+            tasks.push(newTask);
+            ls.setItem(this.key, j.stringify(tasks));
+            e.target.value = null;
+            this.renderTask(newTask);
         }
     }
 
@@ -39,11 +45,25 @@ export class ToDoList {
 
     }
 
-    renderTask() {
+    renderTask(task) {
+        let templateTask = `
+            <li class='List-item' ${task.isComplete ? 'complete': ''}>
+                <input class='List-checkbox' type='checkbox' id="${task.id}" ${task.isComplete ? 'checked': ''}>
+                <label class="List-label" data-id="${task.id}" contenteditable spellcheck>${task.name}</label>
+                <a class="List-removelink" data-id="${task.id}" href="#">🗑️</a>
+            </li>
+        `;
 
+        list.insertAdjacentHTML('beforeend', templateTask)
     }
 
     render() {
+
+        let tasks = j.parse(ls.getItem(this.key)),
+            listTasks = list.children;
+
+        tasks.forEach(task => this.renderTask(task));
+
         task.addEventListener('keyup', this.addTask);
         list.addEventListener('keyup', this.editTask);
         list.addEventListener('keyup', this.removeTask);
