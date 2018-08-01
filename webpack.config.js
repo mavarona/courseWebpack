@@ -11,7 +11,8 @@ module.exports = {
         vanilla: './src/hello_vanilla.js',
         react: './src/hello_react.js',
         vue: './src/hello_vue.js',
-        ts: './src/hello_ts.js'
+        ts: './src/hello_ts.js',
+        todo: './src/to_do.js'
     },
     output: {
         filename: '[name].[chunkhash].js'
@@ -97,6 +98,12 @@ module.exports = {
             chunks: ['ts']
         }),
         new VueLoaderPlugin(),
+        new HtmlWebPackPlugin({
+            template: './src/template.html',
+            filename: './to-do.html',
+            hash: true,
+            chunks: ['todo']
+        }),
         new MiniCssExtractPlugin({
             filename: '[name].css',
             chunkFilename: '[id].css'
